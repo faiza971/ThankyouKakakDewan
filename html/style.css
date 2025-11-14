@@ -1,0 +1,183 @@
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #001f3f 0%, #004080 30%, #0074D9 60%, #7FDBFF 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+  cursor: pointer; /* menandakan halaman bisa diklik untuk mengaktifkan suara */
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.pin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255,255,255,0.3);
+  text-align: center;
+  color: white;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 1.5s ease;
+  z-index: 20;
+}
+
+.pin-container h2 {
+  margin-bottom: 20px;
+  font-family: 'Segoe Script', cursive;
+}
+
+input[type="password"] {
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  text-align: center;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  background: #00bfff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #0099cc;
+}
+
+.error {
+  margin-top: 10px;
+  color: #ff9999;
+  font-size: 14px;
+  height: 20px;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.9);}
+  to {opacity: 1; transform: scale(1);}
+}
+
+.typing {
+  position: absolute;
+  top: 10%;
+  width: 85%;
+  max-width: 900px;
+  color: #e0f2fe;
+  font-family: 'Segoe Script', cursive;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  white-space: pre-line;
+  line-height: 1.8;
+  text-shadow: 0 0 10px rgba(147, 197, 253, 0.9);
+  opacity: 1;
+  transition: opacity 2s ease;
+  display: none;
+  z-index: 10;
+}
+
+.slideshow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 70%;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.slideshow img {
+  position: absolute;
+  width: auto;
+  max-width: 70%;
+  max-height: 80%;
+  object-fit: contain;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+
+.bird {
+  position: absolute;
+  bottom: 45%;
+  left: -150px;
+  width: 120px;
+  opacity: 0;
+  z-index: 15;
+}
+
+@keyframes flyAcross {
+  0% { left: -150px; bottom: 40%; opacity: 0; transform: scale(1) rotate(0deg); }
+  10% { opacity: 1; }
+  50% { left: 50%; bottom: 50%; transform: scale(1.1) rotate(5deg); }
+  100% { left: 110%; bottom: 60%; opacity: 0; transform: scale(1.2) rotate(-5deg); }
+}
+
+.see-you {
+  position: absolute;
+  bottom: 45%;
+  left: 120%;
+  font-family: 'Segoe Script', cursive;
+  font-size: 42px;
+  color: #fff;
+  text-shadow: 0 0 20px #fff, 0 0 40px #00bfff, 0 0 60px #80dfff;
+  opacity: 0;
+  white-space: nowrap;
+  z-index: 15;
+}
+
+@keyframes slideInCenter {
+  0% { left: 120%; opacity: 0; transform: scale(0.9); }
+  50% { left: 50%; opacity: 1; transform: translateX(-50%) scale(1.05); }
+  100% { left: 50%; transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow: 0 0 20px #fff, 0 0 40px #00bfff, 0 0 80px #80dfff;
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 40px #fff, 0 0 80px #00ffff, 0 0 120px #80ffff;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fadeOutText {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes waveHand {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  50% { transform: rotate(-15deg); }
+  75% { transform: rotate(10deg); }
+}
+
+@keyframes fadeInWave {
+  from { opacity: 0; transform: scale(0.5) rotate(-30deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
