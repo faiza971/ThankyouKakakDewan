@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perpisahan dewan</title>
+<link rel="stylesheet" href="style.css"> <!-- Link ke file CSS eksternal -->
+</head>
+
+<body onclick="activateAudio()">
+
+<!-- ====== AUDIO LATAR (HTML5 Audio) ====== -->
+<audio id="bgMusic" src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Kevin_MacLeod/Calming/Calming_-_Kevin_MacLeod_-_Relaxing.mp3" loop preload="auto"></audio>
+
+<script>
+/*
+ activateAudio:
+ - Memainkan audio HTML5 setelah klik pengguna (untuk mematuhi kebijakan browser)
+ - Hanya berjalan sekali (menghapus onclick)
+*/
+function activateAudio() {
+  const audio = document.getElementById('bgMusic');
+  audio.volume = 0.5; // Sesuaikan volume (0.0 hingga 1.0)
+  audio.play().catch((error) => {
+    console.warn('Audio gagal dimainkan:', error);
+    // Jika gagal, coba lagi pada klik berikutnya
+    document.body.addEventListener('click', () => audio.play(), { once: true });
+  });
+
+  // Nonaktifkan aktivasi otomatis lebih lanjut
+  document.body.onclick = null;
+}
+</script>
+
+<!-- ====== HALAMAN PIN ====== -->
+<div class="pin-container" id="pinContainer">
+  <h2>Aku punya sesuatu buat kalian<br>Masukkan pin nya '2025' 💐</h2>
+  <input type="password" id="pinInput" placeholder="****" maxlength="6">
+  <button onclick="checkPin()">Masuk</button>
+  <div class="error" id="errorMsg"></div>
+</div>
+
+<!-- ====== TEKS & SLIDESHOW ====== -->
+<div class="typing" id="typingText"></div> 
+<div class="slideshow" id="slideshow"> 
+  <img src="gfty/f1.jpeg" alt="Foto 1">
+  <img src="gfty/f2.jpeg" alt="Foto 2">
+  <img src="gfty/f3.jpeg" alt="Foto 3">
+  <img src="gfty/f4.jpeg" alt="Foto 4">
+  <img src="gfty/f5.jpeg" alt="Foto 5">
+  <img src="gfty/f6.jpeg" alt="Foto 6">
+  <img src="gfty/f7.jpeg" alt="Foto 7">
+  <img src="gfty/f8.jpeg" alt="Foto 8">
+  <img src="gfty/f9.jpeg" alt="Foto 9">
+  <img src="gfty/f10.jpeg" alt="Foto 10">
+</div>
+
+<img src="https://cdn-icons-png.flaticon.com/512/616/616490.png" class="bird" id="bird" alt="Burung Terbang">
+<div class="see-you" id="seeYouText">SEE YOU KALIAN 💖</div>
+
+<script>
+// ===== PIN LOGIN =====
+const correctPin = "2025";
+
+function checkPin() {
+  const input = document.getElementById("pinInput").value;
+  const error = document.getElementById("errorMsg");
+
+  if (input === correctPin) {
+    document.getElementById("pinContainer").style.display = "none";
+    document.getElementById("typingText").style.display = "block";
+    startAnimation();
+  } else {
+    error.textContent = "❌ PIN salah, coba lagi!";
+    // Hapus pesan setelah 2 detik
+    setTimeout(()=> error.textContent = "", 2000);
+  }
+}
+
+// ===== TEKS UCAPAN =====
+function startAnimation() {
+  const textPart1 = [
+    "Waah, nggk kerasa yaa udah musyam ajaa 😊",
+    "Padahal baru kemarin kita kita jadi calban 😄",
+    "Masa sih kita udah mau di tinggal purna kak ?? 😢",
+    "Kak… terima kasih sudah menjadi tempat kami bertanya, 😊",
+    " bersandar, dan belajar selama ini. 🤍",
+    "Rasanya waktu berjalan terlalu cepat ⏳",
+    "Dan tiba-tiba kami harus melepas Kakak untuk purna 😔",
+    "Setiap nasihat, senyuman, dan perhatian kecil dari Kakak 😊",
+    "tidak akan kami lupakan dan akan selalu kami ingat. 💗"
+  ];
+
+  const textPart2 = [
+    "Kakak bukan hanya dewan bagi kami… tapi kakak, sahabat, dan panutan yang tulus. 🌷✨",
+    "Selamat purna, Kak. Semoga langkah Kakak setelah ini selalu dipenuhi kebahagiaan 😊✨",
+    "kesempatan baik, dan orang-orang yang mendukung seperti Kakak mendukung kami. 🌟",
+    "Jangan lupa kami ya… karena kami pasti kangen... 😭💗",
+    "Terima kasih untuk semua kenangan indah yang Kakak titipkan. 🤍✨",
+    "Semoga Allah selalu menjaga setiap perjalanan Kakak. 💗🙏✨",
+    "Semangat dan sukses selalu kalian 💐😊",
+    "💖 SEE YOU AGAIN KAKAK 👋🏻💐"
+  ];
+
+  const textElement = document.getElementById("typingText");
+  let lineIndex = 0, charIndex = 0;
+
+  function typeEffect(lines, callback) {
+    if (lineIndex < lines.length) {
+      if (charIndex < lines[lineIndex].length) {
+        textElement.innerHTML += lines[lineIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(() => typeEffect(lines, callback), 50);
+      } else {
+        textElement.innerHTML += "\n";
+        lineIndex++;
+        charIndex = 0;
+        setTimeout(() => typeEffect(lines, callback), 400);
+      }
+    } else {
+      setTimeout(() => fadeOutText(callback), 1500);
+    }
+  }
+
+  function fadeOutText(callback) {
+    textElement.style.opacity = "0";
+    setTimeout(() => {
+      textElement.innerHTML = "";
+      textElement.style.opacity = "1";
+      lineIndex = 0;
+      charIndex = 0;
+      callback();
+    }, 2000);
+  }
+
+  setTimeout(() => {
+    typeEffect(textPart1, () => {
+      typeEffect(textPart2, () => {
+        fadeOutText(showSlideshow);
+      });
+    });
+  }, 1000);
+}
+
+// ===== SLIDESHOW =====
+const slideshow = document.getElementById("slideshow");
+const slides = Array.from(slideshow.querySelectorAll("img"));
+let currentSlide = 0;
+const delay = 3000;
+
+function showSlideshow() {
+  slideshow.style.display = "flex";
+  showNextSlide();
+}
+
+function showNextSlide() {
+  slides.forEach(img => img.style.opacity = 0);
+  if (currentSlide >= slides.length) currentSlide = 0;
+  slides[currentSlide].style.opacity = 1;
+  currentSlide++;
+  if (currentSlide >= slides.length) {
+    setTimeout(() => fadeOutSlideshow(), delay);
+  } else {
+    setTimeout(showNextSlide, delay);
+  }
+}
+
+function fadeOutSlideshow() {
+  slideshow.style.transition = "opacity 2s ease";
+  slideshow.style.opacity = 0;
+  setTimeout(() => {
+    slideshow.style.display = "none";
+    slideshow.style.opacity = 1;
+    showEnding();
+  }, 2000);
+}
+
+// ===== BURUNG + SEE YOU =====
+function showEnding() {
+  const bird = document.getElementById("bird");
+  const text = document.getElementById("seeYouText");
+
+  bird.style.animation = "flyAcross 10s ease-in-out forwards";
+  bird.style.opacity = 1;
+
+  setTimeout(() => {
+    text.style.animation = "slideInCenter 5s ease-out forwards, glowPulse 2s ease-in-out infinite 5s";
+    text.style.opacity = 1;
+
+    setTimeout(() => {
+      text.style.animation = "fadeOutText 2s forwards";
+      setTimeout(() => {
+        text.style.display = "none";
+        showWavingHand();
+      }, 2000);
+    }, 5000);
+  }, 4000);
+}
+
+// ===== TANGAN MELAMBAI =====
+function showWavingHand() {
+  const hand = document.createElement("div");
+  hand.textContent = "👋🏻";
+  hand.style.position = "absolute";
+  hand.style.fontSize = "80px";
+  hand.style.opacity = "0";
+  hand.style.animation = "fadeInWave 1.5s ease-out forwards, waveHand 1s ease-in-out infinite 2s";
+  document.body.appendChild(hand);
+
+  setTimeout(() => {
+    document.body.innerHTML = "";
+    document.body.style.display = "flex";
+    document.body.style.justifyContent = "center";
+    document.body.style.alignItems = "center";
+  }, 7000);
+}
+</script>
+
+</body>
+</html>
